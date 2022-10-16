@@ -1,17 +1,9 @@
-FROM node:lts-buster
+FROM aquabotwa/sanuwa-official:md-beta
 
-RUN apt-get update && \
-  apt-get install -y \
-  ffmpeg \
-  imagemagick \
-  webp && \
-  apt-get upgrade -y && \
-  rm -rf /var/lib/apt/lists/*
+RUN git clone https://github.com/En-Cuzier/Queen-AleXa-MD /root/aquabot
+WORKDIR /root/aquabot/
+ENV TZ=Europe/Istanbul
+RUN yarn add supervisor -g
+RUN yarn install --no-audit
 
-COPY package.json .
-
-RUN npm install
-
-COPY . .
-
-CMD ["node", "main.js"]
+CMD ["node", "bot.js"]
